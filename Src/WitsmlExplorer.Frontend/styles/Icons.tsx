@@ -22,7 +22,16 @@ import {
   refresh,
   settings,
   trending_up as isActive,
-  world
+  world,
+  filter_alt as filter,
+  save,
+  close,
+  cloud_download as cloudDownload,
+  person,
+  new_alert,
+  filter_alt_active as activeFilter,
+  done
+  
 } from "@equinor/eds-icons";
 const icons = {
   accountCircle,
@@ -47,7 +56,15 @@ const icons = {
   compare,
   world,
   arrowUp,
-  arrowDown
+  arrowDown,
+  filter,
+  save,
+  close,
+  cloudDownload,
+  person,
+  new_alert,
+  activeFilter,
+  done
 };
 
 Icon.add(icons);
