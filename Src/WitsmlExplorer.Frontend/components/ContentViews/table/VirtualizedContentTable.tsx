@@ -141,7 +141,7 @@ const innerGridElementType = forwardRef<HTMLDivElement, any>(({ children, ...res
             ))}
         </RowWrapper>
       </TableHeader>
-      <DataContainer>{children}</DataContainer>
+      <div>{children}</div>
     </div>
   );
 });
@@ -339,10 +339,6 @@ const TableHeader = styled.div`
   z-index: 3;
 `;
 
-const DataContainer = styled.div`
-  position: absolute;
-`;
-
 const TableHeaderCell = styled(MuiTableCell)`
   color: ${colors.text.staticIconsDefault};
   background-color: ${colors.interactive.tableHeaderFillResting};
@@ -357,6 +353,16 @@ const TableHeaderCell = styled(MuiTableCell)`
   & .MuiTableSortLabel-root.MuiTableSortLabel-active {
     color: ${colors.text.staticIconsDefault};
   }
+  &:nth-child(1) {
+    position: sticky;
+    z-index: 3;
+    left: 0;
+  }
+  &:nth-child(2) {
+    position: sticky;
+    z-index: 3;
+    left: 50px;
+  }
 `;
 
 const TableRow = styled.div<{ hover: boolean }>`
@@ -364,6 +370,7 @@ const TableRow = styled.div<{ hover: boolean }>`
 `;
 
 const TableDataCell = styled(MuiTableCell)<{ clickable?: string }>`
+  background-color: white;
   border-right: 1px solid rgba(224, 224, 224, 1);
   && {
     color: ${colors.text.staticIconsDefault};
@@ -382,6 +389,16 @@ const TableDataCell = styled(MuiTableCell)<{ clickable?: string }>`
   }
   ${TableRow}:hover & {
     background-color: ${colors.interactive.tableCellFillActivated};
+  }
+  &:nth-child(1) {
+    position: sticky;
+    z-index: 2;
+    left: 0;
+  }
+  &:nth-child(2) {
+    position: sticky;
+    z-index: 2;
+    left: 50px;
   }
 `;
 TableDataCell.displayName = "TableDataCell";
