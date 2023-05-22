@@ -24,6 +24,7 @@ import {
   filter_alt as filter,
   folder_open as folderOpen,
   format_line_spacing as formatLine,
+  in_progress as inProgress,
   info_circle as infoCircle,
   trending_up as isActive,
   launch,
@@ -71,7 +72,8 @@ const icons = {
   activeFilter,
   filter,
   upload,
-  beat
+  beat,
+  inProgress
 };
 
 Icon.add(icons);

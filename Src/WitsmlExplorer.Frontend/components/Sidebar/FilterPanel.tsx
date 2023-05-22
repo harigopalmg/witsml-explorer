@@ -6,11 +6,14 @@ import styled from "styled-components";
 import NavigationContext from "../../contexts/navigationContext";
 import NavigationType from "../../contexts/navigationType";
 import { WellboreObjects } from "../../contexts/wellboreObjects";
-import { colors } from "../../styles/Colors";
+import OperationContext from "../../contexts/operationContext";
 
 const FilterPanel = (): React.ReactElement => {
   const { navigationState, dispatchNavigation } = useContext(NavigationContext);
   const { selectedFilter, selectedCurveThreshold } = navigationState;
+  const {
+    operationState: { colors }
+  } = useContext(OperationContext);
 
   const [showMore, setShowmore] = useState<boolean>(false);
   const ListWellborObj = {
@@ -27,7 +30,7 @@ const FilterPanel = (): React.ReactElement => {
     gridTemplateColumns: "1fr 80px",
     alignItems: "baseline",
     userSelect: "none",
-    color: "{colors.interactive.primaryResting}",
+    color: colors.interactive.primaryResting,
     paddingLeft: "0.8rem",
     paddingRight: "0.5rem",
     paddingBottom: "0.5rem"
@@ -37,6 +40,7 @@ const FilterPanel = (): React.ReactElement => {
   const wellObjectList = Object.values(WellboreObjects).map((wellObj: string) => {
     return (
       <Checkbox
+        className="checkBox"
         label={wellObj}
         disabled={true} //disabling everything for now as checking objects does not do anything yet, should use DisabledWellObj when implemented
         style={{ height: "0.75rem" }}
@@ -47,7 +51,7 @@ const FilterPanel = (): React.ReactElement => {
   });
 
   return (
-    <Container style={{ boxShadow: !showMore ? "1px 4px 5px 0px #8888" : "none" }}>
+    <Container style={{ boxShadow: !showMore ? "1px 4px 5px 0px #8888" : "none", background: colors.ui.backgroundLight }}>
       {
         <>
           <div style={WellboreObject}>
@@ -57,6 +61,7 @@ const FilterPanel = (): React.ReactElement => {
             </span>
 
             <TextField
+              className="textFeild"
               id="filter-wellLimit"
               type="number"
               min={0}
@@ -68,19 +73,21 @@ const FilterPanel = (): React.ReactElement => {
             />
           </div>
           <Divider />
-          <div style={{ paddingTop: "0.75rem" }}>
+          <div style={{ paddingTop: "0.75rem", color: "pink !important" }}>
             <Checkbox
+              className="checkBox"
               id="filter-isActive"
               value={"Show active Wells / Wellbores"}
               color={"primary"}
               checked={selectedFilter.isActive}
               onChange={(event) => dispatchNavigation({ type: NavigationType.SetFilter, payload: { filter: { ...selectedFilter, isActive: event.target.checked } } })}
-              style={{ height: "0.625rem", userSelect: "none" }}
+              style={{ height: "0.625rem", userSelect: "none", color: "pink !important" }}
               label={"Show active Wells / Wellbores"}
             />
           </div>
           <div style={{ userSelect: "none" }}>
             <Checkbox
+              className="checkBox"
               onChange={(event) => dispatchNavigation({ type: NavigationType.SetFilter, payload: { filter: { ...selectedFilter, objectGrowing: event.target.checked } } })}
               checked={selectedFilter.objectGrowing}
               id="filter-objectGrowing"
@@ -109,6 +116,8 @@ const FilterPanel = (): React.ReactElement => {
             </span>
 
             <TextField
+              className="textFeild"
+              style={{ background: "transparent" }}
               id="curveThreshold-time"
               type="number"
               min={0}
@@ -125,6 +134,7 @@ const FilterPanel = (): React.ReactElement => {
 
           <div style={{ userSelect: "none" }}>
             <Checkbox
+              className="checkBox"
               id="curveThreshold-hideInactive"
               onChange={(event) =>
                 dispatchNavigation({ type: NavigationType.SetCurveThreshold, payload: { curveThreshold: { ...selectedCurveThreshold, hideInactiveCurves: event.target.checked } } })
@@ -165,7 +175,6 @@ const FilterPanel = (): React.ReactElement => {
 };
 
 const Container = styled.div`
-  background-color: ${colors.ui.backgroundLight};
   padding-bottom: 0.5em;
 `;
 

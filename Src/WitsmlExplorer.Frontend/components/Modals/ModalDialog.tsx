@@ -3,7 +3,7 @@ import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
 import OperationContext from "../../contexts/operationContext";
 import OperationType from "../../contexts/operationType";
-import { colors } from "../../styles/Colors";
+import { color, dark } from "../../styles/Colors";
 import Icons from "../../styles/Icons";
 
 interface ModalDialogProps {
@@ -42,6 +42,9 @@ const ModalDialog = (props: ModalDialogProps): React.ReactElement => {
     buttonPosition: ButtonPosition = ControlButtonPosition.BOTTOM
   } = props;
   const context = React.useContext(OperationContext);
+  const {
+    operationState: { colors }
+  } = context;
   const [confirmButtonIsFocused, setConfirmButtonIsFocused] = useState<boolean>(false);
   const confirmButtonIsDisabled = isLoading || confirmDisabled;
 
@@ -75,6 +78,8 @@ const ModalDialog = (props: ModalDialogProps): React.ReactElement => {
           onClick={onSubmit}
           color={confirmColor ?? "primary"}
           variant="contained"
+          confirmButtonIsDisabled={confirmButtonIsDisabled}
+          colors={colors}
         >
           {ButtonPosition == ControlButtonPosition.TOP ? <Icons name="save" /> : ""}
           {confirmText ?? "Save"}
@@ -84,7 +89,7 @@ const ModalDialog = (props: ModalDialogProps): React.ReactElement => {
       <></>
     ),
     showCancelButton ? (
-      <StyledButton key={"cancel"} disabled={isLoading} onClick={onCancel} color={confirmColor ?? "primary"} variant="outlined">
+      <StyledButton colors={colors} key={"cancel"} disabled={isLoading} onClick={onCancel} color={"primary"} variant="outlined">
         Cancel
       </StyledButton>
     ) : (
@@ -104,9 +109,11 @@ const ModalDialog = (props: ModalDialogProps): React.ReactElement => {
   ];
 
   const top = (
-    <HeadTitle>
+    <HeadTitle colors={colors}>
       <Typography
-        color="primary"
+        style={{
+          color: colors.infographic.primaryMossGreen
+        }}
         token={{
           fontSize: "1.5rem",
           fontWeight: 600
@@ -129,12 +136,17 @@ const ModalDialog = (props: ModalDialogProps): React.ReactElement => {
     </Dialog.Actions>
   );
   const header = (
-    <Dialog.Header>
-      <Dialog.Title>{heading}</Dialog.Title>
+    <Dialog.Header className="dialogHeader">
+      <Dialog.Title style={{ color: colors.text.staticIconsDefault }}>{heading}</Dialog.Title>
     </Dialog.Header>
   );
+  const dialogStyle = {
+    width: width,
+    background: colors.ui.backgroundDefault,
+    color: colors.text.staticIconsDefault
+  };
   return (
-    <Dialog onKeyDown={onKeyPress} open={true} style={{ width: width }}>
+    <Dialog className="dialog" onKeyDown={onKeyPress} open={true} style={dialogStyle}>
       {ButtonPosition == ControlButtonPosition.TOP ? top : header}
       <Content>
         {content}
@@ -151,13 +163,13 @@ export enum ModalWidth {
   LARGE = "960px" // md
 }
 
-const HeadTitle = styled.div`
+const HeadTitle = styled.div<{ colors?: color }>`
   margin-top: 0.5rem;
   display: flex;
   padding: 0.5rem 2rem;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid ${colors.interactive.disabledBorder};
+  border-bottom: 2px solid ${(props) => props.colors.interactive.disabledBorder};
 `;
 
 export const ModalContentLayout = styled.div`
@@ -199,7 +211,18 @@ const Content = styled(Dialog.CustomContent)`
   }
 `;
 
-const StyledButton = styled(Button)<{ align?: string }>`
+const StyledButton = styled(Button)<{ align?: string; colors?: color; confirmButtonIsDisabled: boolean }>`
+  ${(props) => (JSON.stringify(props.colors) === JSON.stringify(dark) ? `color:white` : "")};
+  ${(props) =>
+    props.confirmButtonIsDisabled && JSON.stringify(props.colors) === JSON.stringify(dark)
+      ? `
+        &&:disabled {
+        background: #565656;
+        border:1px solid #565656;
+        color:#9CA6AC;
+      }`
+      : ""};
+
   &&& {
     ${({ align }) => (align === "right" ? `margin-left: auto;` : "margin: 0.5em;")};
   }

@@ -39,6 +39,7 @@ const WellBatchUpdateModal = (props: WellBatchUpdateModalProps): React.ReactElem
           content={
             <>
               <TextField
+                className="textFeild"
                 id={"field"}
                 label={"field"}
                 value={editableWell.field}
@@ -47,6 +48,7 @@ const WellBatchUpdateModal = (props: WellBatchUpdateModalProps): React.ReactElem
                 onChange={(e) => setEditableWell({ ...editableWell, field: e.target.value })}
               />
               <TextField
+                className="textFeild"
                 id={"country"}
                 label={"country"}
                 value={editableWell.country}
@@ -55,6 +57,7 @@ const WellBatchUpdateModal = (props: WellBatchUpdateModalProps): React.ReactElem
                 onChange={(e) => setEditableWell({ ...editableWell, country: e.target.value })}
               />
               <TextField
+                className="textFeild"
                 id={"operator"}
                 label={"operator"}
                 value={editableWell.operator}
@@ -63,6 +66,7 @@ const WellBatchUpdateModal = (props: WellBatchUpdateModalProps): React.ReactElem
                 onChange={(e) => setEditableWell({ ...editableWell, operator: e.target.value })}
               />
               <TextField
+                className="textFeild"
                 id={"timeZone"}
                 label={"time zone"}
                 value={editableWell.timeZone}

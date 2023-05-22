@@ -1,5 +1,6 @@
 import { Dispatch, ReactElement, useReducer } from "react";
 import OperationType from "./operationType";
+import { color, light } from "../styles/Colors";
 
 export enum UserTheme {
   Compact = "compact",
@@ -56,12 +57,18 @@ export interface SetTimeZoneAction extends PayloadAction {
   payload: TimeZone;
 }
 
+export interface setModeAction extends PayloadAction {
+  type: OperationType.SetMode;
+  payload: color;
+}
+
 export interface OperationState {
   contextMenu: ContextMenu;
   progressIndicatorValue: number;
   modals: ReactElement[];
   theme: UserTheme;
   timeZone: TimeZone;
+  colors: color;
 }
 
 export interface MousePosition {
@@ -82,7 +89,8 @@ export const initOperationStateReducer = (): [OperationState, Dispatch<Action>] 
     progressIndicatorValue: 0,
     modals: [],
     theme: UserTheme.Compact,
-    timeZone: TimeZone.Local
+    timeZone: TimeZone.Local,
+    colors: light
   };
   return useReducer(reducer, initialState);
 };
@@ -101,6 +109,8 @@ export const reducer = (state: OperationState, action: Action | PayloadAction): 
       return setTheme(state, action as SetThemeAction);
     case OperationType.SetTimeZone:
       return setTimeZone(state, action as SetTimeZoneAction);
+    case OperationType.SetMode:
+      return setMode(state, action as setModeAction);
     default:
       throw new Error();
   }
@@ -153,4 +163,11 @@ const setTimeZone = (state: OperationState, { payload }: SetTimeZoneAction) => {
   };
 };
 
-export type OperationAction = DisplayModalAction | HideModalAction | DisplayContextMenuAction | HideContextMenuAction | SetThemeAction | SetTimeZoneAction;
+const setMode = (state: OperationState, { payload }: setModeAction) => {
+  return {
+    ...state,
+    colors: payload
+  };
+};
+
+export type OperationAction = DisplayModalAction | HideModalAction | DisplayContextMenuAction | HideContextMenuAction | SetThemeAction | SetTimeZoneAction | setModeAction;
