@@ -51,11 +51,12 @@ export const dark = {
     primaryHover: "#ADE2E6",
     primaryResting: "#97CACE",
     successResting: tokens.colors.interactive.success__resting.hex,
-    tableHeaderFillResting: "#132634",
-    tableCellFillActivated: tokens.colors.interactive.table__cell__fill_activated.hex,
+    tableHeaderFillResting: "#243746",
+    tableCellFillActivated: "#007079",
     successHover: "#C1E7C1",
     sidebarDivider: "#243746",
-    checkBoxHover: "#FFFFFF33"
+    checkBoxHover: "#FFFFFF33",
+    textHighlight: "#004F55"
   },
   text: {
     staticIconsDefault: "#FFFFFF",
