@@ -18,7 +18,10 @@ export interface UserCredentialsModalProps {
 
 const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElement => {
   const { server, confirmText } = props;
-  const { dispatchOperation } = useContext(OperationContext);
+  const {
+    operationState: { colors },
+    dispatchOperation
+  } = useContext(OperationContext);
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
@@ -71,8 +74,9 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
       heading={`Access server`}
       content={
         <>
-          <Typography style={{ marginBottom: 20 }}>{server.name}</Typography>
+          <Typography style={{ marginBottom: 20, color: colors.text.staticIconsDefault }}>{server.name}</Typography>
           <TextField
+            className="textFeild"
             autoFocus={!shouldFocusPasswordInput}
             id={"username" + server.id}
             label={"Username"}
@@ -81,9 +85,10 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
             variant={username?.length === 0 ? "error" : undefined}
             helperText={username?.length === 0 ? "Username must be 1-7936 characters" : ""}
             onChange={(e: any) => setUsername(e.target.value)}
-            style={{ marginBottom: 15 }}
+            style={{ marginBottom: 15, color: colors.text.staticIconsDefault }}
           />
           <TextField
+            className="textFeild"
             autoFocus={shouldFocusPasswordInput}
             id={"password" + server.id}
             label={"Password"}
@@ -93,10 +98,13 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
             type="password"
             autoComplete="current-password"
             onChange={(e: any) => setPassword(e.target.value)}
+            style={{ color: colors.text.staticIconsDefault }}
           />
           {server.usernames && server.usernames.length > 0 && (
             <Row>
               <Autocomplete
+                className="textFeild"
+                style={{ color: colors.text.staticIconsDefault }}
                 label="Switch to an already logged in user"
                 initialSelectedOptions={[selectedUsername]}
                 options={server.usernames}
@@ -109,6 +117,7 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
             </Row>
           )}
           <Checkbox
+            className="checkBox"
             label={`Keep me logged in to this server for 24 hours`}
             defaultChecked={keepLoggedIn}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {

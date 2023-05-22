@@ -5,12 +5,16 @@ import styled, { CSSProp } from "styled-components";
 import Filter, { EMPTY_FILTER } from "../../contexts/filter";
 import NavigationContext from "../../contexts/navigationContext";
 import NavigationType from "../../contexts/navigationType";
-import { colors } from "../../styles/Colors";
+import OperationContext from "../../contexts/operationContext";
+import { color } from "../../styles/Colors";
 import Icons from "../../styles/Icons";
 import FilterPanel from "./FilterPanel";
 
 const SearchFilter = (): React.ReactElement => {
   const { navigationState, dispatchNavigation } = useContext(NavigationContext);
+  const {
+    operationState: { colors }
+  } = useContext(OperationContext);
   const { selectedFilter } = navigationState;
   const [filter, setFilter] = useState<Filter>(EMPTY_FILTER);
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -35,9 +39,10 @@ const SearchFilter = (): React.ReactElement => {
 
   return (
     <>
-      <SeachLayout>
+      <SeachLayout colors={colors}>
         <SearchBarContainer>
           <Search
+            className="textFeild"
             width={10}
             height={"30px"}
             id="filter-tree"
@@ -67,7 +72,7 @@ const SearchFilter = (): React.ReactElement => {
     </>
   );
 };
-const SeachLayout = styled.div`
+const SeachLayout = styled.div<{ colors: color }>`
   display: grid;
   grid-template-columns: 1fr 44px;
   padding: 0.6rem 0rem 0.5rem 1rem;

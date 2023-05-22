@@ -8,7 +8,8 @@ import styled from "styled-components";
 import { ToggleTreeNodeAction } from "../../contexts/navigationActions";
 import NavigationContext from "../../contexts/navigationContext";
 import NavigationType from "../../contexts/navigationType";
-import { colors } from "../../styles/Colors";
+import OperationContext from "../../contexts/operationContext";
+import { color } from "../../styles/Colors";
 import Icon from "../../styles/Icons";
 
 interface StyledTreeItemProps extends TreeItemProps {
@@ -28,7 +29,9 @@ const StyledTreeItem = (props: StyledTreeItemProps): React.ReactElement => {
     const toggleTreeNode: ToggleTreeNodeAction = { type: NavigationType.ToggleTreeNode, payload: { nodeId: props.nodeId } };
     dispatchNavigation(toggleTreeNode);
   };
-
+  const {
+    operationState: { colors }
+  } = useContext(OperationContext);
   return (
     <TreeItem
       onIconClick={() => toggleTreeNode(props)}
@@ -36,7 +39,7 @@ const StyledTreeItem = (props: StyledTreeItemProps): React.ReactElement => {
         <Label>
           {isActive && labelText == "Logs" && <Icon name="beat" color={colors.interactive.primaryResting} style={{ position: "absolute", right: "-25px", top: "6px" }} />}
           <Tooltip title={labelText} arrow placement="top" disableHoverListener={labelText === "" || labelText == null}>
-            <NavigationDrawer selected={selected} compactMode={isCompactMode}>
+            <NavigationDrawer colors={colors} selected={selected} compactMode={isCompactMode}>
               {labelText} {isLoading && <DotProgress color={"primary"} size={32} />}
             </NavigationDrawer>
           </Tooltip>
@@ -54,8 +57,8 @@ const Label = styled.div`
   display: flex;
 `;
 
-const NavigationDrawer = styled.p<{ selected: boolean; compactMode: boolean }>`
-  color: ${(props) => (props.selected ? colors.interactive.primaryResting : colors.text.staticIconsDefault)};
+const NavigationDrawer = styled.p<{ selected: boolean; compactMode: boolean; colors: color }>`
+  color: ${(props) => (props.selected ? props.colors.interactive.primaryResting : props.colors.text.staticIconsDefault)};
   font-family: EquinorMedium, sans-serif;
   font-size: 0.75rem;
   line-height: 1rem;
