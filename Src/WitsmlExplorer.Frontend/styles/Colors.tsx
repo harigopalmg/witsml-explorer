@@ -52,6 +52,7 @@ export const dark = {
     primaryResting: "#97CACE",
     successResting: tokens.colors.interactive.success__resting.hex,
     tableHeaderFillResting: "#132634",
+    tableCellFillActivated: tokens.colors.interactive.table__cell__fill_activated.hex,
     successHover: "#C1E7C1",
     sidebarDivider: "#243746",
     checkBoxHover: "#FFFFFF33"
@@ -90,7 +91,7 @@ export interface color {
     primaryResting: string;
     successResting: string;
     tableHeaderFillResting: string;
-    tableFillActivated: string;
+    tableCellFillActivated: string;
     textHighlight: string;
     successHover: string;
     sidebarDivider: string;

@@ -39,16 +39,13 @@ const StyledTreeItem = (props: StyledTreeItemProps): React.ReactElement => {
         <Label>
           {isActive && labelText == "Logs" && <Icon name="beat" color={colors.interactive.primaryResting} style={{ position: "absolute", right: "-25px", top: "6px" }} />}
           <Tooltip title={labelText} arrow placement="top" disableHoverListener={labelText === "" || labelText == null}>
-            <NavigationDrawer selected={selected} compactMode={isCompactMode}>
+            <NavigationDrawer colors={colors} selected={selected} compactMode={isCompactMode}>
               {labelText} {isLoading && <DotProgress color={"primary"} size={32} />}
             </NavigationDrawer>
           </Tooltip>
           {isActive && ["measured depth", "date time"].includes(indexType) && (
             <Icon name="beat" color={colors.interactive.primaryResting} style={{ position: "absolute", right: "-25px", top: "6px" }} />
           )}
-          <NavigationDrawer colors={colors} selected={selected} compactMode={isCompactMode}>
-            {labelText} {isLoading && <DotProgress color={"primary"} size={32} />}
-          </NavigationDrawer>
         </Label>
       }
       {...other}

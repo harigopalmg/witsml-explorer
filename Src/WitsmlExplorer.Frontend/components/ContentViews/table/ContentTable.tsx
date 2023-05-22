@@ -97,6 +97,7 @@ export const ContentTable = (props: ContentTableProps): React.ReactElement => {
                   hover
                   selected={checkableRows && checkedContentItems?.length > 0 && checkedContentItems.findIndex((checkedRow: ContentTableRow) => item.id === checkedRow.id) !== -1}
                   key={index}
+                  colors={colors}
                   onContextMenu={onContextMenu ? (event) => onContextMenu(event, item, checkedContentItems) : (e) => e.preventDefault()}
                 >
                   {checkableRows && (
