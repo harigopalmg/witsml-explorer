@@ -1,10 +1,11 @@
 import { Checkbox, Table, TableBody, TableCell as MuiTableCell, TableHead, TableRow as MuiTableRow, TableSortLabel } from "@material-ui/core";
 import orderBy from "lodash/orderBy";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { colors } from "../../../styles/Colors";
+import { color, light } from "../../../styles/Colors";
 import Icon from "../../../styles/Icons";
 import { ContentTableColumn, ContentTableProps, ContentTableRow, ContentType, getCheckedRows, getColumnAlignment, getComparatorByColumn, getSelectedRange, Order } from "./";
+import OperationContext from "../../../contexts/operationContext";
 
 export const ContentTable = (props: ContentTableProps): React.ReactElement => {
   const { columns, onSelect, onContextMenu, checkableRows, order } = props;
@@ -13,7 +14,9 @@ export const ContentTable = (props: ContentTableProps): React.ReactElement => {
   const [sortOrder, setSortOrder] = useState<Order>(order ?? Order.Ascending);
   const [sortedColumn, setSortedColumn] = useState<ContentTableColumn>(columns[0]);
   const [activeIndexRange, setActiveIndexRange] = useState<number[]>([]);
-
+  const {
+    operationState: { colors }
+  } = useContext(OperationContext);
   useEffect(() => {
     setData(orderBy(props.data, getComparatorByColumn(sortedColumn), [sortOrder, sortOrder]));
   }, [props.data, sortOrder, sortedColumn]);
@@ -58,9 +61,9 @@ export const ContentTable = (props: ContentTableProps): React.ReactElement => {
   return (
     <Table>
       <TableHead>
-        <TableRow>
+        <TableRow colors={colors}>
           {checkableRows && (
-            <TableHeaderCell>
+            <TableHeaderCell colors={colors}>
               <Checkbox
                 onChange={toggleAllRows}
                 checked={checkedContentItems.length === data.length}
@@ -72,8 +75,8 @@ export const ContentTable = (props: ContentTableProps): React.ReactElement => {
             columns.map(
               (column) =>
                 column && (
-                  <TableHeaderCell key={column.property} align={getColumnAlignment(column)}>
-                    <TableSortLabel active={sortedColumn === column} direction={sortOrder} onClick={() => sortByColumn(column)}>
+                  <TableHeaderCell colors={colors} key={column.property} align={getColumnAlignment(column)}>
+                    <TableSortLabel style={{ color: colors.text.staticIconsTertiary }} active={sortedColumn === column} direction={sortOrder} onClick={() => sortByColumn(column)}>
                       {column.label}
                     </TableSortLabel>
                   </TableHeaderCell>
@@ -87,7 +90,7 @@ export const ContentTable = (props: ContentTableProps): React.ReactElement => {
             checkVisibility(item.isVisibleFunction) && (
               <TableRow hover key={index} onContextMenu={onContextMenu ? (event) => onContextMenu(event, item, checkedContentItems) : (e) => e.preventDefault()}>
                 {checkableRows && (
-                  <TableDataCell>
+                  <TableDataCell colors={colors}>
                     <Checkbox
                       onClick={(event) => toggleRow(event, item)}
                       checked={checkedContentItems?.length > 0 && checkedContentItems.findIndex((checkedRow: ContentTableRow) => item.id === checkedRow.id) !== -1}
@@ -99,6 +102,7 @@ export const ContentTable = (props: ContentTableProps): React.ReactElement => {
                     (column) =>
                       column && (
                         <TableDataCell
+                          colors={colors}
                           id={item[column.property] + column.property}
                           key={item[column.property] + column.property}
                           clickable={onSelect ? "true" : "false"}
@@ -128,29 +132,30 @@ export const formatCell = (type: ContentType, data: string | boolean) => {
   }
 };
 
-const TableRow = styled(MuiTableRow)`
+const TableRow = styled(MuiTableRow)<{ colors?: color }>`
   &&&:hover {
-    background-color: ${colors.interactive.tableHeaderFillResting};
+    background-color: ${(props) => props.colors?.interactive.tableHeaderFillResting};
   }
 `;
 
-const TableHeaderCell = styled(MuiTableCell)`
+const TableHeaderCell = styled(MuiTableCell)<{ colors: color }>`
   && {
-    border-bottom-width: 2px;
+    border-bottom: 2px solid ${(props) => props.colors.interactive.disabledBorder};
     position: sticky;
     top: 0;
-    background-color: ${colors.interactive.tableHeaderFillResting};
+    background-color: ${(props) => props.colors.interactive.tableHeaderFillResting};
     z-index: 1;
-    color: ${colors.text.staticIconsDefault};
   }
 `;
 
-const TableDataCell = styled(MuiTableCell)<{ type?: ContentType; clickable?: string }>`
+const TableDataCell = styled(MuiTableCell)<{ type?: ContentType; clickable?: string; colors?: color }>`
   position: relative;
   z-index: 0;
-  border-right: 1px solid rgba(224, 224, 224, 1);
+  border-right: 1px solid ${(props) => (JSON.stringify(props.colors) == JSON.stringify(light) ? "rgba(224, 224, 224, 1)" : "#007079")};
+
   && {
-    color: ${colors.text.staticIconsDefault};
+    color: ${(props) => props.colors.text.staticIconsDefault};
+    border-bottom: 1px solid ${(props) => (JSON.stringify(props.colors) == JSON.stringify(light) ? "rgba(224, 224, 224, 1)" : "#007079")};
     font-family: EquinorMedium;
   }
   cursor: ${(props) => (props.clickable === "true" ? "pointer" : "arrow")};

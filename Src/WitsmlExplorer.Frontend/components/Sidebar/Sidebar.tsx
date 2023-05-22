@@ -6,17 +6,21 @@ import styled, { CSSProp } from "styled-components";
 import NavigationContext from "../../contexts/navigationContext";
 import Well from "../../models/well";
 import Wellbore from "../../models/wellbore";
-import { colors } from "../../styles/Colors";
+import { color } from "../../styles/Colors";
 import Icon from "../../styles/Icons";
 import WellProgress from "../WellProgress";
 import SearchFilter from "./SearchFilter";
 import WellItem from "./WellItem";
+import OperationContext from "../../contexts/operationContext";
 
 const Sidebar = (): React.ReactElement => {
   const { navigationState } = useContext(NavigationContext);
   const { filteredWells, expandedTreeNodes } = navigationState;
   const WellListing: CSSProp = { display: "grid", gridTemplateColumns: "1fr 25px", justifyContent: "center", alignContent: "stretch" };
   const isCompactMode = useTheme().props.MuiCheckbox.size === "small";
+  const {
+    operationState: { colors }
+  } = useContext(OperationContext);
 
   return (
     <React.Fragment>
@@ -37,10 +41,10 @@ const Sidebar = (): React.ReactElement => {
                     {well.wellbores.some((wellbore: Wellbore) => wellbore.isActive) ? (
                       <ActiveWellIndicator compactMode={isCompactMode} />
                     ) : (
-                      <InactiveWellInidcator compactMode={isCompactMode} />
+                      <InactiveWellInidcator colors={colors} compactMode={isCompactMode} />
                     )}
                   </div>
-                  <Divider style={{ margin: "0px" }} key={index} />
+                  <Divider style={{ margin: "0px", backgroundColor: colors.interactive.disabledBorder }} key={index} />
                 </React.Fragment>
               ))}
             </TreeView>
@@ -62,15 +66,15 @@ const SidebarTreeView = styled.div`
 const ActiveWellIndicator = styled.div<{ compactMode: boolean }>`
   width: 10px;
   height: 10px;
-  background-color: ${colors.interactive.successHover};
+  background-color: green;
   border-radius: 50%;
   margin-top: ${(props) => (props.compactMode ? "0.5rem" : "1rem")};
 `;
 
-const InactiveWellInidcator = styled.div<{ compactMode: boolean }>`
+const InactiveWellInidcator = styled.div<{ compactMode: boolean; colors?: color }>`
   width: 10px;
   height: 10px;
-  background-color: ${colors.interactive.disabledBorder};
+  background-color: ${(props) => props.colors?.text.staticInactiveIndicator};
   border-radius: 50%;
   margin-top: ${(props) => (props.compactMode ? "0.5rem" : "1rem")};
 `;

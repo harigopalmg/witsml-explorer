@@ -1,8 +1,8 @@
 import { createGlobalStyle } from "styled-components";
-import { colors } from "../styles/Colors";
+import { color } from "../styles/Colors";
 import { AssetsLoader } from "./AssetsLoader";
 
-const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle<{ colors: color }>`
   @font-face {
     font-family: "Equinor";
     src: url("${AssetsLoader.getAssetsRoot()}/assets/fonts/Equinor-Regular.woff2");
@@ -41,16 +41,23 @@ const GlobalStyles = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: ${colors.interactive.disabledBorder};
+    background-color: ${(props) => props.colors.interactive.disabledBorder};
   }
 
   ::-webkit-scrollbar-track {
     background-color: transparent;
   }
+  
+  ::-webkit-scrollbar-corner{
+    background-color:transparent;
+  }
+  ::placeholder { 
+  color: ${(props) => props.colors.text.staticIconsDefault} !important;
+  }
 
   body {
     font-family: EquinorRegular, sans-serif;
-    background: #FFFFFF;
+    background:${(props) => props.colors.ui.backgroundDefault};
     font-size: 16px;
     margin: 0;
     height: 100vh;
@@ -97,6 +104,71 @@ const GlobalStyles = createGlobalStyle`
       }
     }
   }
+
+  .MuiPaper-root{
+    background:${(props) => props.colors.ui.backgroundLight} !important;
+     p {
+     color:${(props) => props.colors.text.staticIconsDefault}!important;
+    }
+    svg{
+      fill:${(props) => props.colors.infographic.primaryMossGreen} !important; 
+    }
+  }
+
+  input[type=text],input[type=password],input[type=number] {
+    color:${(props) => props.colors.text.staticIconsDefault} ;
+  }
+
+  .checkBox span{
+  color:${(props) => props.colors.text.staticIconsDefault} 
+
+  }
+
+  input[type=checkbox] + svg{
+    fill:${(props) => props.colors.infographic.primaryMossGreen} 
+  }
+  .textFeild{
+    div{
+          background:${(props) => props.colors.text.staticTextFeildDefault}
+    }
+  }
+  .dialogHeader{
+    hr{
+      background-color: ${(props) => props.colors.interactive.disabledBorder};
+    }
+  
+  } 
+  .textFeild label{
+    color:${(props) => props.colors.text.staticTextLabel}
+  }
+  .checkBox {
+    span{
+    color :${(props) => props.colors.infographic.primaryMossGreen}
+    }
+    span:hover{
+      background:${(props) => props.colors.interactive.checkBoxHover}
+    }
+ 
+  }
+  .native {
+    select {
+      background:${(props) => props.colors.text.staticTextFeildDefault};
+      color:${(props) => props.colors.text.staticIconsDefault};
+      option {
+        background:${(props) => props.colors.ui.backgroundLight} ;
+        color:${(props) => props.colors.text.staticIconsDefault};
+      }
+    }
+    label {
+        color: ${(props) => props.colors.text.staticTextLabel} !important;
+    }
+  }
+  .row{
+    .Autocomplete__Container {
+      background:pink
+    }
+  }
+
 `;
 
 export default GlobalStyles;

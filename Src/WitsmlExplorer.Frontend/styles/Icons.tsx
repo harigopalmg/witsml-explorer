@@ -32,7 +32,8 @@ import {
   save,
   settings,
   upload,
-  world
+  world,
+  in_progress as inProgress
 } from "@equinor/eds-icons";
 const icons = {
   accountCircle,
@@ -67,7 +68,8 @@ const icons = {
   cloudOff,
   activeFilter,
   filter,
-  upload
+  upload,
+  inProgress
 };
 
 Icon.add(icons);

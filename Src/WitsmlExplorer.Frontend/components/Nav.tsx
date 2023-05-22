@@ -10,14 +10,17 @@ import { ObjectType, pluralizeObjectType } from "../models/objectType";
 import { Server } from "../models/server";
 import Well from "../models/well";
 import Wellbore, { calculateLogTypeDepthId } from "../models/wellbore";
-import { colors } from "../styles/Colors";
 import Icon from "../styles/Icons";
 import TopRightCornerMenu from "./TopRightCornerMenu";
+import OperationContext from "../contexts/operationContext";
+import { colors } from "../styles/Colors";
 
 const Nav = (): React.ReactElement => {
   const { navigationState, dispatchNavigation } = useContext(NavigationContext);
   const { selectedServer, selectedWell, selectedWellbore, selectedLogTypeGroup, selectedObjectGroup, currentSelected } = navigationState;
-
+  const {
+    operationState: { colors }
+  } = useContext(OperationContext);
   const [breadcrumbContent, setBreadcrumbContent] = useState([]);
   const createBreadcrumbContent = () => {
     const groupCrumbs = Object.keys(ObjectType).map((key) => {
@@ -42,7 +45,7 @@ const Nav = (): React.ReactElement => {
     <nav>
       <Layout>
         <NavContainer>
-          <Title>WITSML Explorer</Title>
+          <Title style={{ color: colors.infographic.primaryMossGreen }}>WITSML Explorer</Title>
           {breadcrumbContent.length != 0 && <Icon name="chevronRight" color={colors.text.staticIconsTertiary} size={18} style={{ minWidth: "18" }} />}
           <StyledBreadcrumbs color="inherit" aria-label="breadcrumb">
             {breadcrumbContent.map((breadCrumb, index: number) => (
@@ -52,7 +55,7 @@ const Nav = (): React.ReactElement => {
                 onClick={breadCrumb.onClick}
                 style={{
                   fontFamily: breadcrumbContent.length - 1 == index ? "EquinorMedium" : "Equinor",
-                  color: `${colors.interactive.primaryResting}`
+                  color: `${colors.infographic.primaryMossGreen}`
                 }}
                 maxWidth={180}
               >

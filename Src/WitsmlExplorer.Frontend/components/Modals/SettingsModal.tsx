@@ -4,7 +4,7 @@ import styled from "styled-components";
 import OperationContext from "../../contexts/operationContext";
 import { TimeZone, UserTheme } from "../../contexts/operationStateReducer";
 import OperationType from "../../contexts/operationType";
-import { colors } from "../../styles/Colors";
+import { dark, light } from "../../styles/Colors";
 import Icon from "../../styles/Icons";
 import { STORAGE_THEME_KEY, STORAGE_TIMEZONE_KEY } from "../Constants";
 import { getOffsetFromTimeZone } from "../DateFormatter";
@@ -23,7 +23,7 @@ const timeZoneLabels: Record<TimeZone, string> = {
 
 const SettingsModal = (): React.ReactElement => {
   const {
-    operationState: { theme, timeZone },
+    operationState: { theme, timeZone, colors },
     dispatchOperation
   } = useContext(OperationContext);
 
@@ -31,6 +31,15 @@ const SettingsModal = (): React.ReactElement => {
     const selectedTheme = event.target.value;
     localStorage.setItem(STORAGE_THEME_KEY, selectedTheme);
     dispatchOperation({ type: OperationType.SetTheme, payload: selectedTheme });
+  };
+  const onChangeMode = (event: any) => {
+    let selectedMode;
+    if (event.target.value == "light") {
+      selectedMode = light;
+    } else {
+      selectedMode = dark;
+    }
+    dispatchOperation({ type: OperationType.SetMode, payload: selectedMode });
   };
 
   const onChangeTimeZone = (event: any) => {
@@ -45,15 +54,28 @@ const SettingsModal = (): React.ReactElement => {
       content={
         <div style={{ display: "flex", gap: "1rem", flexDirection: "column" }}>
           <HorizontalLayout>
-            <Icon name="accessible" size={32} color={colors.interactive.primaryResting} />
-            <NativeSelect label="Theme" id="native-select-theme" onChange={onChangeTheme} defaultValue={theme}>
+            <Icon name="accessible" size={32} color={colors.infographic.primaryMossGreen} />
+            <NativeSelect className="native" label="Theme" id="native-select-theme" onChange={onChangeTheme} defaultValue={theme}>
               <option value={UserTheme.Comfortable}>Comfortable</option>
               <option value={UserTheme.Compact}>Compact</option>
             </NativeSelect>
           </HorizontalLayout>
           <HorizontalLayout>
-            <Icon name="world" size={32} color={colors.interactive.primaryResting} />
-            <NativeSelect label="Time Zone" id="native-select-timezone" onChange={onChangeTimeZone} defaultValue={timeZone}>
+            <Icon name="inProgress" size={32} color={colors.infographic.primaryMossGreen} />
+            <NativeSelect
+              className="native"
+              id={"native-select-mode"}
+              label={"mode"}
+              onChange={onChangeMode}
+              defaultValue={JSON.stringify(colors) === JSON.stringify(light) ? "light" : "dark"}
+            >
+              <option value={"light"}>Light Mode</option>
+              <option value={"dark"}>Dark Mode</option>
+            </NativeSelect>
+          </HorizontalLayout>
+          <HorizontalLayout>
+            <Icon name="world" size={32} color={colors.infographic.primaryMossGreen} />
+            <NativeSelect className="native" label="Time Zone" id="native-select-timezone" onChange={onChangeTimeZone} defaultValue={timeZone}>
               {Object.entries(timeZoneLabels).map(([timeZoneKey, timeZoneLabel]) => (
                 <option key={timeZoneKey} value={timeZoneKey}>
                   {timeZoneLabel}
@@ -66,7 +88,7 @@ const SettingsModal = (): React.ReactElement => {
       onSubmit={() => dispatchOperation({ type: OperationType.HideModal })}
       isLoading={false}
       showCancelButton={false}
-      confirmText="Ok"
+      confirmText="OK"
     />
   );
 };
