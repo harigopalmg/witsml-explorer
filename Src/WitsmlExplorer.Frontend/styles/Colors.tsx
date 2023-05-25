@@ -85,6 +85,7 @@ export interface color {
   };
   interactive: {
     dangerHighlight: string;
+    textHighlight: string;
     dangerHover: string;
     dangerResting: string;
     disabledBorder: string;
@@ -93,7 +94,6 @@ export interface color {
     successResting: string;
     tableHeaderFillResting: string;
     tableCellFillActivated: string;
-    textHighlight: string;
     successHover: string;
     sidebarDivider: string;
     checkBoxHover: string;

@@ -104,20 +104,6 @@ const GlobalStyles = createGlobalStyle<{ colors: color }>`
       }
     }
   }
-  .sideBarView  .MuiTreeItem-root {
-    min-width:0;
-    .MuiTreeItem-iconContainer{
-      flex: none;
-    }
-    .MuiTreeItem-label {
-      min-width:0;
-      p {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-  }
 
   .MuiPaper-root{
     background:${(props) => props.colors.ui.backgroundLight} !important;

@@ -61,17 +61,13 @@ const GeologyIntervalContextMenu = (props: GeologyIntervalContextMenuProps): Rea
         </MenuItem>,
         <MenuItem
           key={"paste"}
-          onClick={() => pasteComponents(servers, geologyIntervalReferences, dispatchOperation, selectedMudLog, JobType.CopyGeologyIntervals)}
+          onClick={() => pasteComponents(servers, geologyIntervalReferences, dispatchOperation, selectedMudLog)}
           disabled={geologyIntervalReferences === null}
         >
           <StyledIcon name="paste" color={colors.interactive.primaryResting} />
           <Typography color={"primary"}>{menuItemText("paste", "geology interval", geologyIntervalReferences?.componentUids)}</Typography>
         </MenuItem>,
-        <MenuItem
-          key={"delete"}
-          onClick={() => onClickDeleteComponents(dispatchOperation, toDelete, JobType.DeleteGeologyIntervals)}
-          disabled={checkedGeologyIntervals.length === 0}
-        >
+        <MenuItem key={"delete"} onClick={() => onClickDeleteComponents(dispatchOperation, toDelete, JobType.DeleteComponents)} disabled={checkedGeologyIntervals.length === 0}>
           <StyledIcon name="deleteToTrash" color={colors.interactive.primaryResting} />
           <Typography color={"primary"}>{menuItemText("delete", "geology interval", checkedGeologyIntervals)}</Typography>
         </MenuItem>,

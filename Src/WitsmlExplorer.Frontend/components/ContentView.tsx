@@ -5,6 +5,7 @@ import { ObjectType } from "../models/objectType";
 import { BhaRunsListView } from "./ContentViews/BhaRunsListView";
 import ChangeLogsListView from "./ContentViews/ChangeLogsListView";
 import { CurveValuesView } from "./ContentViews/CurveValuesView";
+import FluidsReportsListView from "./ContentViews/FluidsReportListView";
 import FormationMarkersListView from "./ContentViews/FormationMarkersListView";
 import JobsView from "./ContentViews/JobsView";
 import LogCurveInfoListView from "./ContentViews/LogCurveInfoListView";
@@ -20,8 +21,8 @@ import TrajectoriesListView from "./ContentViews/TrajectoriesListView";
 import TrajectoryView from "./ContentViews/TrajectoryView";
 import TubularView from "./ContentViews/TubularView";
 import TubularsListView from "./ContentViews/TubularsListView";
+import { WbGeometriesListView } from "./ContentViews/WbGeometriesListView";
 import WbGeometryView from "./ContentViews/WbGeometryView";
-import { WbGeometrysListView } from "./ContentViews/WbGeometrysListView";
 import WellboreObjectTypesListView from "./ContentViews/WellboreObjectTypesListView";
 import { WellboresListView } from "./ContentViews/WellboresListView";
 import { WellsListView } from "./ContentViews/WellsListView";
@@ -29,6 +30,7 @@ import { WellsListView } from "./ContentViews/WellsListView";
 const objectGroupViews: Record<ObjectType, ReactElement> = {
   [ObjectType.BhaRun]: <BhaRunsListView />,
   [ObjectType.ChangeLog]: <ChangeLogsListView />,
+  [ObjectType.FluidsReport]: <FluidsReportsListView />,
   [ObjectType.FormationMarker]: <FormationMarkersListView />,
   [ObjectType.Log]: <LogTypeListView />,
   [ObjectType.Message]: <MessagesListView />,
@@ -37,7 +39,7 @@ const objectGroupViews: Record<ObjectType, ReactElement> = {
   [ObjectType.Risk]: <RisksListView />,
   [ObjectType.Trajectory]: <TrajectoriesListView />,
   [ObjectType.Tubular]: <TubularsListView />,
-  [ObjectType.WbGeometry]: <WbGeometrysListView />
+  [ObjectType.WbGeometry]: <WbGeometriesListView />
 };
 
 const objectViews: Partial<Record<ObjectType, ReactElement>> = {
