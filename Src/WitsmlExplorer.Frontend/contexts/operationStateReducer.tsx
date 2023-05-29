@@ -82,6 +82,7 @@ export interface ContextMenu {
 }
 
 const EMPTY_CONTEXT_MENU: ContextMenu = { component: null, position: { mouseX: null, mouseY: null } };
+const Light: color = light;
 
 export const initOperationStateReducer = (): [OperationState, Dispatch<Action>] => {
   const initialState: OperationState = {
@@ -90,7 +91,7 @@ export const initOperationStateReducer = (): [OperationState, Dispatch<Action>] 
     modals: [],
     theme: UserTheme.Compact,
     timeZone: TimeZone.Local,
-    colors: light
+    colors: Light
   };
   return useReducer(reducer, initialState);
 };

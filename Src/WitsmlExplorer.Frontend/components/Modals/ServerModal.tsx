@@ -117,7 +117,6 @@ const ServerModal = (props: ServerModalProps): React.ReactElement => {
           <ContentWrapper>
             <Label label="Server URL" style={labelStyle} />
             <TextField
-              className="textFeild"
               id="url"
               defaultValue={server.url}
               variant={displayUrlError ? "error" : null}
@@ -129,7 +128,6 @@ const ServerModal = (props: ServerModalProps): React.ReactElement => {
             />
             <Label label="Server name" style={labelStyle} />
             <TextField
-              className="textFeild"
               id="name"
               defaultValue={server.name}
               variant={displayNameError ? "error" : null}
@@ -141,7 +139,6 @@ const ServerModal = (props: ServerModalProps): React.ReactElement => {
             />
             <Label label="Server description" style={labelStyle} />
             <TextField
-              className="textFeild"
               id="description"
               defaultValue={server.description}
               onChange={(e: any) => setServer({ ...server, description: e.target.value })}
@@ -151,7 +148,6 @@ const ServerModal = (props: ServerModalProps): React.ReactElement => {
               <>
                 <Label label="Roles (space delimited)" style={labelStyle} />
                 <TextField
-                  className="textFeild"
                   id="role"
                   defaultValue={server.roles?.join(" ")}
                   onChange={(e: any) => setServer({ ...server, roles: e.target.value.split(" ") })}
@@ -161,7 +157,6 @@ const ServerModal = (props: ServerModalProps): React.ReactElement => {
             )}
             <Label label="Number of decimals in depth log index" style={labelStyle} />
             <TextField
-              className="textFeild"
               id="depthLogDecimals"
               defaultValue={server.depthLogDecimals}
               variant={isNaN(server.depthLogDecimals) ? "error" : null}

@@ -41,8 +41,7 @@ const SearchFilter = (): React.ReactElement => {
     <>
       <SeachLayout colors={colors}>
         <SearchBarContainer>
-          <Search
-            className="textFeild"
+          <StyledSearch
             width={10}
             height={"30px"}
             id="filter-tree"
@@ -51,6 +50,7 @@ const SearchFilter = (): React.ReactElement => {
             onChange={(event) => setWellNameFilter(event.target.value)}
             autoComplete={"off"}
             style={{ userSelect: "none" }}
+            colors={colors}
           />
         </SearchBarContainer>
         <Icons
@@ -78,9 +78,19 @@ const SeachLayout = styled.div<{ colors: color }>`
   padding: 0.6rem 0rem 0.5rem 1rem;
   position: relative;
   padding-right: 6px;
+  border-bottom: 1px solid ${(props) => props.colors.interactive.disabledBorder};
 `;
 
 const SearchBarContainer = styled.div`
   width: 80%;
+`;
+
+const StyledSearch = styled(Search)<{ colors: color }>`
+  label {
+    color: ${(props) => props.colors.text.staticTextLabel};
+  }
+  div {
+    background: ${(props) => props.colors.text.staticTextFeildDefault};
+  }
 `;
 export default SearchFilter;

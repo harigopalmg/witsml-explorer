@@ -14,12 +14,13 @@ import JobInfoContextMenu, { JobInfoContextMenuProps } from "../ContextMenus/Job
 import formatDateString from "../DateFormatter";
 import { ContentTable, ContentTableColumn, ContentType, Order } from "./table";
 import { clipLongString } from "./ViewUtils";
+import { color } from "../../styles/Colors";
 
 export const JobsView = (): React.ReactElement => {
   const { navigationState } = useContext(NavigationContext);
   const {
     dispatchOperation,
-    operationState: { timeZone }
+    operationState: { timeZone, colors }
   } = useContext(OperationContext);
   const { servers, selectedServer } = navigationState;
   const [jobInfos, setJobInfos] = useState<JobInfo[]>([]);
@@ -111,16 +112,17 @@ export const JobsView = (): React.ReactElement => {
   return (
     <>
       <Panel>
-        <Button
+        <StyledButton
           variant="outlined"
           aria-disabled={shouldRefresh ? true : false}
           aria-label={shouldRefresh ? "loading data" : null}
           onClick={shouldRefresh ? undefined : () => setShouldRefresh(true)}
           disabled={shouldRefresh}
+          colors={colors}
         >
           <Icon name="refresh" />
           Refresh
-        </Button>
+        </StyledButton>
         {msalEnabled && (getUserAppRoles().includes(adminRole) || getUserAppRoles().includes(developerRole)) && (
           <Switch
             label="Show all users' jobs"
@@ -129,7 +131,7 @@ export const JobsView = (): React.ReactElement => {
             }}
           />
         )}
-        <Typography>Last fetched: {lastFetched}</Typography>
+        <Typography style={{ color: colors.text.staticIconsDefault }}>Last fetched: {lastFetched}</Typography>
       </Panel>
       <ContentTable columns={columns} data={jobInfoRows} order={Order.Descending} onContextMenu={onContextMenu} />
     </>
@@ -148,6 +150,10 @@ const Panel = styled.div`
   display: flex;
   gap: 20px;
   align-items: center;
+`;
+const StyledButton = styled(Button)<{ colors?: color }>`
+  white-space: nowrap;
+  color: ${(props) => props.colors.infographic.primaryMossGreen};
 `;
 
 export default JobsView;

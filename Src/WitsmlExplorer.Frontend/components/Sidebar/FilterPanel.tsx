@@ -7,6 +7,7 @@ import NavigationContext from "../../contexts/navigationContext";
 import NavigationType from "../../contexts/navigationType";
 import { WellboreObjects } from "../../contexts/wellboreObjects";
 import OperationContext from "../../contexts/operationContext";
+import { color } from "../../styles/Colors";
 
 const FilterPanel = (): React.ReactElement => {
   const { navigationState, dispatchNavigation } = useContext(NavigationContext);
@@ -39,13 +40,13 @@ const FilterPanel = (): React.ReactElement => {
   const defaultCheckedValues = ["Well", "Wellbore", "bhaRun", "changeLog", "formationMarker", "log", "message", "mudLog", "risk", "trajectory", "tubular", "wbGeometry"];
   const wellObjectList = Object.values(WellboreObjects).map((wellObj: string) => {
     return (
-      <Checkbox
-        className="checkBox"
+      <StyledCheckBox
         label={wellObj}
         disabled={true} //disabling everything for now as checking objects does not do anything yet, should use DisabledWellObj when implemented
         style={{ height: "0.75rem" }}
         defaultChecked={defaultCheckedValues.includes(wellObj)}
         key={wellObj}
+        colors={colors}
       />
     );
   });
@@ -60,8 +61,7 @@ const FilterPanel = (): React.ReactElement => {
               <Typography token={{ fontStyle: "italic", fontFamily: "EquinorRegular", fontSize: "0.75rem", color: colors.text.staticIconsTertiary }}>(0 for no limit)</Typography>
             </span>
 
-            <TextField
-              className="textFeild"
+            <StyledTextField
               id="filter-wellLimit"
               type="number"
               min={0}
@@ -70,12 +70,12 @@ const FilterPanel = (): React.ReactElement => {
               }
               value={selectedFilter.wellLimit}
               autoComplete={"off"}
+              colors={colors}
             />
           </div>
           <Divider />
           <div style={{ paddingTop: "0.75rem", color: "pink !important" }}>
-            <Checkbox
-              className="checkBox"
+            <StyledCheckBox
               id="filter-isActive"
               value={"Show active Wells / Wellbores"}
               color={"primary"}
@@ -83,11 +83,11 @@ const FilterPanel = (): React.ReactElement => {
               onChange={(event) => dispatchNavigation({ type: NavigationType.SetFilter, payload: { filter: { ...selectedFilter, isActive: event.target.checked } } })}
               style={{ height: "0.625rem", userSelect: "none", color: "pink !important" }}
               label={"Show active Wells / Wellbores"}
+              colors={colors}
             />
           </div>
           <div style={{ userSelect: "none" }}>
-            <Checkbox
-              className="checkBox"
+            <StyledCheckBox
               onChange={(event) => dispatchNavigation({ type: NavigationType.SetFilter, payload: { filter: { ...selectedFilter, objectGrowing: event.target.checked } } })}
               checked={selectedFilter.objectGrowing}
               id="filter-objectGrowing"
@@ -95,6 +95,7 @@ const FilterPanel = (): React.ReactElement => {
               color={"primary"}
               label={"Show growing logs"}
               style={{ userSelect: "none" }}
+              colors={colors}
             />
           </div>
           <div
@@ -115,8 +116,7 @@ const FilterPanel = (): React.ReactElement => {
               <Typography token={{ fontStyle: "italic", fontFamily: "EquinorRegular", fontSize: "0.75rem", color: colors.text.staticIconsTertiary }}> (minutes) </Typography>
             </span>
 
-            <TextField
-              className="textFeild"
+            <StyledTextField
               style={{ background: "transparent" }}
               id="curveThreshold-time"
               type="number"
@@ -129,12 +129,12 @@ const FilterPanel = (): React.ReactElement => {
               }
               value={selectedCurveThreshold.timeInMinutes}
               autoComplete={"off"}
+              colors={colors}
             />
           </div>
 
           <div style={{ userSelect: "none" }}>
-            <Checkbox
-              className="checkBox"
+            <StyledCheckBox
               id="curveThreshold-hideInactive"
               onChange={(event) =>
                 dispatchNavigation({ type: NavigationType.SetCurveThreshold, payload: { curveThreshold: { ...selectedCurveThreshold, hideInactiveCurves: event.target.checked } } })
@@ -144,6 +144,7 @@ const FilterPanel = (): React.ReactElement => {
               color={"primary"}
               style={{ height: "10px" }}
               label={"Hide inactive time curves"}
+              colors={colors}
             />
           </div>
         </>
@@ -177,5 +178,20 @@ const FilterPanel = (): React.ReactElement => {
 const Container = styled.div`
   padding-bottom: 0.5em;
 `;
-
+const StyledCheckBox = styled(Checkbox)<{ colors: color }>`
+  span {
+    color: ${(props) => props.colors.infographic.primaryMossGreen};
+  }
+  span:hover {
+    background: ${(props) => props.colors.interactive.checkBoxHover};
+  }
+`;
+const StyledTextField = styled(TextField)<{ colors: color }>`
+  label {
+    color: ${(props) => props.colors.text.staticTextLabel};
+  }
+  div {
+    background: ${(props) => props.colors.text.staticTextFeildDefault};
+  }
+`;
 export default FilterPanel;

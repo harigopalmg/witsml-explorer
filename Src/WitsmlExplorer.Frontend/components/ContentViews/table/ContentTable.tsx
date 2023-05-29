@@ -158,12 +158,12 @@ const TableRow = styled(MuiTableRow)<{ colors?: color }>`
   }
 `;
 
-export const TableHeaderCell = styled(MuiTableCell)<{ colors: color }>`
+export const TableHeaderCell = styled(MuiTableCell)<{ colors?: color }>`
   && {
-    border-bottom: 2px solid ${(props) => props.colors.interactive.disabledBorder};
+    border-bottom: 2px solid ${(props) => props.colors?.interactive?.disabledBorder};
     position: sticky;
     top: 0;
-    background-color: ${(props) => props.colors.interactive.tableHeaderFillResting};
+    background-color: ${(props) => props.colors?.interactive?.tableHeaderFillResting};
     z-index: 1;
   }
 `;

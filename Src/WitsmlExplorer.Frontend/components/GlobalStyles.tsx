@@ -105,70 +105,31 @@ const GlobalStyles = createGlobalStyle<{ colors: color }>`
     }
   }
 
-  .MuiPaper-root{
-    background:${(props) => props.colors.ui.backgroundLight} !important;
-     p {
-     color:${(props) => props.colors.text.staticIconsDefault}!important;
+  .MuiFormControl-root {
+    .MuiFormLabel-root {
+     color:${(props) => props.colors.text.staticTextLabel}
     }
-    svg{
-      fill:${(props) => props.colors.infographic.primaryMossGreen} !important;
+    .MuiFormLabel-root.Mui-focused {
+      color:${(props) => props.colors.text.staticPropertyValue};
+    }
+    .MuiInput-underline:before {
+      border-bottom: 1px solid #9CA6AC;
+    }
+    .Mui-disabled {
+      color: #999999 !important;
+    }
+    .MuiTypography-colorTextSecondary {
+      color:${(props) => props.colors.text.staticIconsDefault};
     }
   }
 
   input[type=text],input[type=password],input[type=number] {
     color:${(props) => props.colors.text.staticIconsDefault} ;
   }
-
-  .checkBox span{
-  color:${(props) => props.colors.text.staticIconsDefault}
-
-  }
-
-  input[type=checkbox] + svg{
+  
+  input[type=checkbox] + svg {
     fill:${(props) => props.colors.infographic.primaryMossGreen}
   }
-  .textFeild{
-    div{
-          background:${(props) => props.colors.text.staticTextFeildDefault}
-    }
-  }
-  .dialogHeader{
-    hr{
-      background-color: ${(props) => props.colors.interactive.disabledBorder};
-    }
-
-  }
-  .textFeild label{
-    color:${(props) => props.colors.text.staticTextLabel}
-  }
-  .checkBox {
-    span{
-    color :${(props) => props.colors.infographic.primaryMossGreen}
-    }
-    span:hover{
-      background:${(props) => props.colors.interactive.checkBoxHover}
-    }
-
-  }
-  .native {
-    select {
-      background:${(props) => props.colors.text.staticTextFeildDefault};
-      color:${(props) => props.colors.text.staticIconsDefault};
-      option {
-        background:${(props) => props.colors.ui.backgroundLight} ;
-        color:${(props) => props.colors.text.staticIconsDefault};
-      }
-    }
-    label {
-        color: ${(props) => props.colors.text.staticTextLabel} !important;
-    }
-  }
-  .row{
-    .Autocomplete__Container {
-      background:pink
-    }
-  }
-
 `;
 
 export default GlobalStyles;

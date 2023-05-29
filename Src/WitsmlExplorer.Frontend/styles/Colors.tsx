@@ -17,7 +17,8 @@ export const light = {
     tableCellFillActivated: tokens.colors.interactive.table__cell__fill_activated.hex,
     successHover: tokens.colors.interactive.success__hover.hex,
     sidebarDivider: tokens.colors.interactive.primary__resting.hex,
-    checkBoxHover: ""
+    checkBoxHover: "",
+    contextMenuItemHover: ""
   },
   text: {
     staticIconsDefault: tokens.colors.text.static_icons__default.hex,
@@ -29,9 +30,7 @@ export const light = {
     staticPropertyKey: tokens.colors.text.static_icons__tertiary.hex,
     staticPropertyValue: tokens.colors.interactive.primary__resting.hex,
     staticTextFeildDefault: "#F7F7F7",
-    staticTextLabel: "#999999",
-    staticDisabledText: "grey",
-    DisabledBackground: "blue"
+    staticTextLabel: "#999999"
   },
   ui: {
     backgroundDefault: tokens.colors.ui.background__default.hex,
@@ -56,7 +55,8 @@ export const dark = {
     successHover: "#C1E7C1",
     sidebarDivider: "#243746",
     checkBoxHover: "#FFFFFF33",
-    textHighlight: "#004F55"
+    textHighlight: "#004F55",
+    contextMenuItemHover: "#007079"
   },
   text: {
     staticIconsDefault: "#FFFFFF",
@@ -68,9 +68,7 @@ export const dark = {
     staticPropertyKey: "#DEE5E7",
     staticPropertyValue: "#FFFFFF",
     staticTextFeildDefault: "transparent",
-    staticTextLabel: "#CCCCCC",
-    staticDisabledText: "#9CA6AC",
-    disabledBackground: "#565656"
+    staticTextLabel: "#CCCCCC"
   },
   ui: {
     backgroundDefault: "#132634",
@@ -97,20 +95,19 @@ export interface color {
     successHover: string;
     sidebarDivider: string;
     checkBoxHover: string;
+    contextMenuItemHover: string;
   };
   text: {
     staticIconsDefault: string;
     staticIconsTertiary: string;
     staticTextFieldDefault: string;
-    staticCheckBoxDefault: string;
+    staticCheckBoxDefault: string | { hex: string; hsla: string; rgba: string };
     staticInactiveIndicator: string;
     staticPropertyBarDefault: string;
     staticPropertyKey: string;
     staticPropertyValue: string;
     staticTextFeildDefault: string;
     staticTextLabel: string;
-    staticDisabledText: string;
-    disabledBackground: string;
   };
   ui: {
     backgroundDefault: string;

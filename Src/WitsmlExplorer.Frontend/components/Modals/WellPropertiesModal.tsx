@@ -46,7 +46,6 @@ const WellPropertiesModal = (props: WellPropertiesModalProps): React.ReactElemen
           content={
             <>
               <TextField
-                className="textFeild"
                 id={"uid"}
                 label={"uid"}
                 value={editableWell.uid}
@@ -58,7 +57,6 @@ const WellPropertiesModal = (props: WellPropertiesModalProps): React.ReactElemen
                 onChange={(e) => setEditableWell({ ...editableWell, uid: e.target.value })}
               />
               <TextField
-                className="textFeild"
                 id={"name"}
                 label={"name"}
                 value={editableWell.name}
@@ -69,7 +67,6 @@ const WellPropertiesModal = (props: WellPropertiesModalProps): React.ReactElemen
                 onChange={(e) => setEditableWell({ ...editableWell, name: e.target.value })}
               />
               <TextField
-                className="textFeild"
                 id={"field"}
                 label={"field"}
                 value={editableWell.field}
@@ -78,7 +75,6 @@ const WellPropertiesModal = (props: WellPropertiesModalProps): React.ReactElemen
                 onChange={(e) => setEditableWell({ ...editableWell, field: e.target.value })}
               />
               <TextField
-                className="textFeild"
                 id={"country"}
                 label={"country"}
                 value={editableWell.country}
@@ -87,7 +83,6 @@ const WellPropertiesModal = (props: WellPropertiesModalProps): React.ReactElemen
                 onChange={(e) => setEditableWell({ ...editableWell, country: e.target.value })}
               />
               <TextField
-                className="textFeild"
                 id={"operator"}
                 label={"operator"}
                 value={editableWell.operator}
@@ -96,7 +91,6 @@ const WellPropertiesModal = (props: WellPropertiesModalProps): React.ReactElemen
                 onChange={(e) => setEditableWell({ ...editableWell, operator: e.target.value })}
               />
               <TextField
-                className="textFeild"
                 id={"timeZone"}
                 label={"time zone"}
                 value={editableWell.timeZone}
@@ -108,22 +102,8 @@ const WellPropertiesModal = (props: WellPropertiesModalProps): React.ReactElemen
               />
               {mode !== PropertiesModalMode.New && (
                 <>
-                  <TextField
-                    className="textFeild"
-                    disabled
-                    id="dTimCreation"
-                    label="commonData.dTimCreation"
-                    defaultValue={formatDateString(well.dateTimeCreation, timeZone)}
-                    fullWidth
-                  />
-                  <TextField
-                    className="textFeild"
-                    disabled
-                    id="dTimLastChange"
-                    label="commonData.dTimLastChange"
-                    defaultValue={formatDateString(well.dateTimeLastChange, timeZone)}
-                    fullWidth
-                  />
+                  <TextField disabled id="dTimCreation" label="commonData.dTimCreation" defaultValue={formatDateString(well.dateTimeCreation, timeZone)} fullWidth />
+                  <TextField disabled id="dTimLastChange" label="commonData.dTimLastChange" defaultValue={formatDateString(well.dateTimeLastChange, timeZone)} fullWidth />
                 </>
               )}
             </>

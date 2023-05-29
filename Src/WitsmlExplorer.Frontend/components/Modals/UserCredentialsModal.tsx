@@ -7,6 +7,7 @@ import { Server } from "../../models/server";
 import AuthorizationService, { AuthorizationStatus, BasicServerCredentials } from "../../services/authorizationService";
 import ModalDialog, { ModalWidth } from "./ModalDialog";
 import { validText } from "./ModalParts";
+import { color } from "../../styles/Colors";
 
 export interface UserCredentialsModalProps {
   server: Server;
@@ -76,7 +77,6 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
         <>
           <Typography style={{ marginBottom: 20, color: colors.text.staticIconsDefault }}>{server.name}</Typography>
           <TextField
-            className="textFeild"
             autoFocus={!shouldFocusPasswordInput}
             id={"username" + server.id}
             label={"Username"}
@@ -88,7 +88,6 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
             style={{ marginBottom: 15, color: colors.text.staticIconsDefault }}
           />
           <TextField
-            className="textFeild"
             autoFocus={shouldFocusPasswordInput}
             id={"password" + server.id}
             label={"Password"}
@@ -103,7 +102,6 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
           {server.usernames && server.usernames.length > 0 && (
             <Row>
               <Autocomplete
-                className="textFeild"
                 style={{ color: colors.text.staticIconsDefault }}
                 label="Switch to an already logged in user"
                 initialSelectedOptions={[selectedUsername]}
@@ -116,13 +114,13 @@ const UserCredentialsModal = (props: UserCredentialsModalProps): React.ReactElem
               <Button onClick={() => props.onConnectionVerified(selectedUsername)}>Switch user</Button>
             </Row>
           )}
-          <Checkbox
-            className="checkBox"
+          <StyledCheckBox
             label={`Keep me logged in to this server for 24 hours`}
             defaultChecked={keepLoggedIn}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setKeepLoggedIn(e.target.checked);
             }}
+            colors={colors}
           />
         </>
       }
@@ -148,6 +146,14 @@ const Row = styled.div`
   justify-content: space-between;
   padding: 30px 0 20px 0;
   align-items: flex-end;
+`;
+const StyledCheckBox = styled(Checkbox)<{ colors: color }>`
+  span {
+    color: ${(props) => props.colors.text.staticIconsDefault};
+  }
+  span:hover {
+    background: ${(props) => props.colors.interactive.checkBoxHover};
+  }
 `;
 
 export default UserCredentialsModal;

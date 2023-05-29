@@ -136,9 +136,9 @@ const ModalDialog = (props: ModalDialogProps): React.ReactElement => {
     </Dialog.Actions>
   );
   const header = (
-    <Dialog.Header className="dialogHeader">
+    <DialogHeader colors={colors}>
       <Dialog.Title style={{ color: colors.text.staticIconsDefault }}>{heading}</Dialog.Title>
-    </Dialog.Header>
+    </DialogHeader>
   );
   const dialogStyle = {
     width: width,
@@ -148,7 +148,7 @@ const ModalDialog = (props: ModalDialogProps): React.ReactElement => {
   return (
     <Dialog className="dialog" onKeyDown={onKeyPress} open={true} style={dialogStyle}>
       {ButtonPosition == ControlButtonPosition.TOP ? top : header}
-      <Content>
+      <Content colors={colors}>
         {content}
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Content>
@@ -183,11 +183,11 @@ export enum ControlButtonPosition {
   BOTTOM = "bottom"
 }
 
-const Content = styled(Dialog.CustomContent)`
+const Content = styled(Dialog.CustomContent)<{ colors: color }>`
   margin-top: 0.5em;
   max-height: 75vh;
   overflow-y: auto;
-
+  color:${(props) => props.colors.text.staticIconsDefault}
   --track-color: #dddddd;
   --thumb-color: #bbbbbb;
   scrollbar-color: var(--track-color) var(--thumb-color);
@@ -209,12 +209,44 @@ const Content = styled(Dialog.CustomContent)`
   & ::-webkit-scrollbar-track {
     background: var(--track-color);
   }
+  div[class*="InputWrapper__Container"] {
+    label.dHhldd {
+      color: ${(props) => props.colors.text.staticTextLabel};
+    }
+  }
+  div[class*="Input__Container"][disabled] {
+    background: ${(props) => props.colors.text.staticTextFeildDefault};
+    border-bottom: 1px solid #9ca6ac;
+  }
+
+  div[class*="Input__Container"] {
+    background-color: ${(props) => props.colors.text.staticTextFeildDefault};
+  }
+  div[class*="DateTimeField__Layout"] {
+    svg {
+      fill: ${(props) => props.colors.text.staticIconsDefault};
+    }
+    label {
+      color: ${(props) => props.colors.text.staticIconsDefault};
+    }
+  }
+  div[class*="Autocomplete__Container"] {
+    label {
+      color: ${(props) => props.colors.text.staticTextLabel};
+    }
+  }
+  div[class*="MuiButtonGroup-root"] {
+    button {
+      background-color: transparent;
+      color: ${(props) => props.colors.infographic.primaryMossGreen};
+    }
+  }
 `;
 
 const StyledButton = styled(Button)<{ align?: string; colors?: color; confirmButtonIsDisabled: boolean }>`
-  ${(props) => (JSON.stringify(props.colors) === JSON.stringify(dark) ? `color:white` : "")};
+  ${(props) => (props.colors === dark ? `color:white` : "")};
   ${(props) =>
-    props.confirmButtonIsDisabled && JSON.stringify(props.colors) === JSON.stringify(dark)
+    props.confirmButtonIsDisabled && props.colors === dark
       ? `
         &&:disabled {
         background: #565656;
@@ -232,6 +264,12 @@ const ErrorMessage = styled.div`
   margin-top: 0.5em;
   color: red;
   line-break: auto;
+`;
+
+const DialogHeader = styled(Dialog.Header)<{ colors: color }>`
+  hr {
+    background-color: ${(props) => props.colors.interactive.disabledBorder};
+  }
 `;
 
 export default ModalDialog;
