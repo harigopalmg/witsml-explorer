@@ -130,6 +130,19 @@ const GlobalStyles = createGlobalStyle<{ colors: color }>`
   input[type=checkbox] + svg {
     fill:${(props) => props.colors.infographic.primaryMossGreen}
   }
+
+  ul[class*="List__StyledList"] {
+    background: ${(props) => props.colors.ui.backgroundLight}; 
+    li {
+      color: ${(props) => props.colors.text.staticIconsDefault} ;
+      background: ${(props) => props.colors.ui.backgroundLight}; 
+    } 
+    li:hover {
+     text-decoration: none;
+     background-color: ${(props) => props.colors.interactive.contextMenuItemHover};
+    }
+  }
+
 `;
 
 export default GlobalStyles;

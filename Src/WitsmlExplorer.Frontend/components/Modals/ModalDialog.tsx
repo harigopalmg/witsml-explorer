@@ -187,7 +187,7 @@ const Content = styled(Dialog.CustomContent)<{ colors: color }>`
   margin-top: 0.5em;
   max-height: 75vh;
   overflow-y: auto;
-  color:${(props) => props.colors.text.staticIconsDefault}
+  color: ${(props) => props.colors.text.staticIconsDefault};
   --track-color: #dddddd;
   --thumb-color: #bbbbbb;
   scrollbar-color: var(--track-color) var(--thumb-color);
@@ -241,6 +241,19 @@ const Content = styled(Dialog.CustomContent)<{ colors: color }>`
       color: ${(props) => props.colors.infographic.primaryMossGreen};
     }
   }
+
+  input[type="datetime-local"] {
+    color-scheme: ${({ colors }) => (colors === dark ? "dark" : "")};
+  }
+  ${({ colors }) =>
+    colors === dark
+      ? `
+        button[disabled] {
+        background: #565656;
+        border:1px solid #565656;
+        color:#9CA6AC;
+      }`
+      : ""};
 `;
 
 const StyledButton = styled(Button)<{ align?: string; colors?: color; confirmButtonIsDisabled: boolean }>`
