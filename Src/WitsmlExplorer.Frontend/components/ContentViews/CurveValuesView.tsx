@@ -1,4 +1,4 @@
-import { Button, LinearProgress } from "@material-ui/core";
+import { Button, Grid, LinearProgress } from "@material-ui/core";
 import orderBy from "lodash/orderBy";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -27,6 +27,7 @@ import {
   getIndexRanges,
   getProgressRange
 } from "./table";
+import EditIntervel from "./EditIntervel";
 
 interface CurveValueRow extends LogDataRow, ContentTableRow {}
 
@@ -40,6 +41,9 @@ export const CurveValuesView = (): React.ReactElement => {
   const [progress, setProgress] = useState<number>(0);
   const [selectedRows, setSelectedRows] = useState<CurveValueRow[]>([]);
   const selectedLog = selectedObject as LogObject;
+  console.log(navigationState, "1na");
+  console.log(selectedLogCurveInfo, "sele");
+
   const { exportData, properties: exportOptions } = useExport({
     fileExtension: ".csv",
     newLineCharacter: "\n",
@@ -160,28 +164,35 @@ export const CurveValuesView = (): React.ReactElement => {
     };
   }, [selectedLogCurveInfo, selectedLog]);
 
-  const panelElements = [
-    <Button key="downloadall" disabled={isLoading} onClick={() => exportSelectedIndexRange()}>
-      Download all as .csv
-    </Button>,
-    <Button key="downloadselected" disabled={isLoading || !selectedRows.length} onClick={() => exportSelectedDataPoints()}>
-      Download selected as .csv
-    </Button>
-  ];
-
   return (
     <Container>
+      {Boolean(tableData.length) && (
+        <ExportButtonGrid container spacing={1}>
+          <EditIntervel data={tableData} startvalue={selectedLogCurveInfo[0]?.minIndex} endvalue={selectedLogCurveInfo[0]?.maxIndex} />
+          <Grid item>
+            {
+              <Button disabled={isLoading} onClick={() => exportSelectedIndexRange()}>
+                Download all as .csv
+              </Button>
+            }
+          </Grid>
+          {Boolean(selectedRows.length) && (
+            <Grid item>
+              {
+                <Button disabled={isLoading} onClick={() => exportSelectedDataPoints()}>
+                  Download selected as .csv
+                </Button>
+              }
+            </Grid>
+          )}
+        </ExportButtonGrid>
+      )}
       {isLoading && <LinearProgress variant={"determinate"} value={progress} />}
       {!isLoading && !tableData.length && <Message>No data</Message>}
       {Boolean(columns.length) && Boolean(tableData.length) && (
-        <VirtualizedContentTable
-          columns={columns}
-          onRowSelectionChange={rowSelectionCallback}
-          onContextMenu={onContextMenu}
-          data={tableData}
-          checkableRows={true}
-          panelElements={panelElements}
-        />
+        <>
+          <VirtualizedContentTable columns={columns} onRowSelectionChange={rowSelectionCallback} onContextMenu={onContextMenu} data={tableData} checkableRows={true} />
+        </>
       )}
     </Container>
   );
@@ -190,6 +201,12 @@ export const CurveValuesView = (): React.ReactElement => {
 const Container = styled.div`
   height: calc(100% - 65px);
   width: calc(100% - 14px);
+`;
+
+const ExportButtonGrid = styled(Grid)`
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Message = styled.div`
