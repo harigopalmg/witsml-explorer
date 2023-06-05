@@ -1,16 +1,15 @@
 import { Label, TextField, Typography } from "@equinor/eds-core-react";
+import { useContext } from "react";
 
 import styled from "styled-components";
+import NavigationContext from "../../contexts/navigationContext";
 
-interface EditIntervelProps {
-  startvalue: number | Date;
-  endvalue: number | Date;
-  data: any[];
-}
+const EditIntervel = (): React.ReactElement => {
+  //   const { startvalue, endvalue} = props;
+  const { navigationState } = useContext(NavigationContext);
+  const { selectedLogCurveInfo } = navigationState;
 
-const EditIntervel = (props: EditIntervelProps): React.ReactElement => {
-  const { startvalue, endvalue, data } = props;
-  console.log(data);
+  const { minIndex, maxIndex } = selectedLogCurveInfo ? selectedLogCurveInfo[0] : [];
   return (
     <EditIntervelLayout>
       <Typography color="primary" variant="h5">
@@ -20,7 +19,7 @@ const EditIntervel = (props: EditIntervelProps): React.ReactElement => {
         <StyledLabel label="Start Index" />
         <TextField
           id="StartIndex"
-          defaultValue={startvalue}
+          defaultValue={minIndex}
           //   variant={displayUrlError ? "error" : null}
           //   helperText={displayUrlError ? "Not a valid server url" : ""}
           //   onChange={onChangeUrl}
@@ -33,7 +32,7 @@ const EditIntervel = (props: EditIntervelProps): React.ReactElement => {
         <StyledLabel label="End Index" />
         <TextField
           id="endindex"
-          defaultValue={endvalue}
+          defaultValue={maxIndex}
           //   variant={displayUrlError ? "error" : null}
           //   helperText={displayUrlError ? "Not a valid server url" : ""}
           //   onChange={onChangeUrl}

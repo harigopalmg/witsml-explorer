@@ -168,7 +168,7 @@ export const CurveValuesView = (): React.ReactElement => {
     <Container>
       {Boolean(tableData.length) && (
         <ExportButtonGrid container spacing={1}>
-          <EditIntervel data={tableData} startvalue={selectedLogCurveInfo[0]?.minIndex} endvalue={selectedLogCurveInfo[0]?.maxIndex} />
+          <EditIntervel />
           <Grid item>
             {
               <Button disabled={isLoading} onClick={() => exportSelectedIndexRange()}>
