@@ -33,7 +33,8 @@ import {
   save,
   settings,
   upload,
-  world
+  world,
+  arrow_forward as arrowForwardSmall
 } from "@equinor/eds-icons";
 const icons = {
   accountCircle,
@@ -69,7 +70,8 @@ const icons = {
   cloudOff,
   activeFilter,
   filter,
-  upload
+  upload,
+  arrowForwardSmall
 };
 
 Icon.add(icons);

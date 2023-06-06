@@ -39,7 +39,6 @@ const LogCurveInfoContextMenu = (props: LogCurveInfoContextMenuProps): React.Rea
     const displayModalAction: DisplayModalAction = { type: OperationType.DisplayModal, payload: <SelectIndexToDisplayModal {...modalProps} /> };
     dispatchOperation(displayModalAction);
   };
-
   const onClickCopyRange = () => {
     const copyRangeProps: CopyRangeModalProps = {
       mnemonics: checkedLogCurveInfoRows.map((lc) => lc.mnemonic)

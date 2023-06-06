@@ -41,8 +41,6 @@ export const CurveValuesView = (): React.ReactElement => {
   const [progress, setProgress] = useState<number>(0);
   const [selectedRows, setSelectedRows] = useState<CurveValueRow[]>([]);
   const selectedLog = selectedObject as LogObject;
-  console.log(navigationState, "1na");
-  console.log(selectedLogCurveInfo, "sele");
 
   const { exportData, properties: exportOptions } = useExport({
     fileExtension: ".csv",

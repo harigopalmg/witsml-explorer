@@ -152,7 +152,6 @@ export const VirtualizedContentTable = (props: ContentTableProps): React.ReactEl
   const [sortedColumn, setSortedColumn] = useState<ContentTableColumn>(columns[0]);
   const [activeIndexRange, setActiveIndexRange] = useState<number[]>([]);
   const isCompactMode = useTheme().props.MuiCheckbox.size === "small";
-
   useEffect(() => {
     setData(() => orderBy(props.data, getComparatorByColumn(sortedColumn), [sortOrder, sortOrder]));
   }, [props.data, sortOrder, sortedColumn]);

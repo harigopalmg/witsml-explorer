@@ -30,6 +30,7 @@ export interface ContentTableProps {
   inset?: Inset;
   panelElements?: React.ReactElement[];
   showTotalItems?: boolean;
+  bin?: boolean;
 }
 
 export enum Order {
